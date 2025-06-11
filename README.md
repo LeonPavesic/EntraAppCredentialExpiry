@@ -46,6 +46,57 @@ This PowerShell script helps Microsoft 365 administrators proactively monitor Mi
    ```powershell
    .\EntraAppCredentialExpiry.ps1 -CreateSession -TenantId "<YourTenantId>" -ClientId "<YourClientId>" -CertificateThumbprint "<Thumbprint>" -SoonToExpireInDays 30
 
+## Setting Up the Microsoft Graph Email Sender App
+
+To enable email notifications from the script, you need to register an application in Microsoft Entra ID and grant it permissions to send emails via Microsoft Graph.
+
+---
+
+### Step 1: Register a New Application
+
+1. Sign in to the [Azure Portal](https://portal.azure.com/).  
+2. Navigate to **Azure Active Directory** > **App registrations** > **New registration**.  
+3. Enter a name like `Graph Email Sender`.  
+4. Select the supported account types (single or multi-tenant).  
+5. Click **Register**.
+
+---
+
+### Step 2: Configure API Permissions
+
+1. Go to the app’s **API permissions** tab.  
+2. Click **Add a permission** > **Microsoft Graph** > **Application permissions**.  
+3. Search for and add `Mail.Send`.  
+4. Click **Add permissions**.  
+5. Click **Grant admin consent** for your tenant.
+
+---
+
+### Step 3: Create Client Credentials
+
+1. Navigate to **Certificates & secrets**.  
+2. Create a new **Client secret** or upload a **Certificate**.  
+3. Save the secret value or certificate thumbprint securely for use in the script.
+
+---
+
+### Step 4: Use Credentials in Your Script
+
+Provide these values in your script parameters:
+
+- `$TenantId` – Your Azure AD tenant ID  
+- `$ClientId` – The registered application’s Client ID  
+- `$ClientSecret` or `$CertificateThumbprint` – The secret or certificate for authentication  
+
+---
+
+### Required Permission Summary
+
+| Permission | Type                   | Description                      |
+|------------|------------------------|---------------------------------|
+| Mail.Send  | Application permission | Allows the app to send emails   |
+
+
 License
 This project is licensed under the MIT License — see the LICENSE file for details.
 
